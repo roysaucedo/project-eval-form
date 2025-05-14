@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Project Evaluation Form</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --gray: #6b7280;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        h2 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        #results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            display: none;
+        }
+        
+        .score-chart {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .score-label {
+            font-weight: 600;
+        }
+        
+        .score-bar-container {
+            width: 100%;
+            height: 1.5rem;
+            background-color: #e5e7eb;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        
+        .score-bar {
+            height: 100%;
+            border-radius: 0.25rem;
+            transition: width 0.5s;
+        }
+        
+        .results-decision {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.25rem;
+        }
+        
+        .take-project {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #065f46;
+        }
+        
+        .consider-project {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #92400e;
+        }
+        
+        .decline-project {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #b91c1c;
+        }
+        
+        .recommendations {
+            margin-top: 1.5rem;
+        }
+        
+        .recommendations h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .recommendations ul {
+            padding-left: 1.5rem;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Web Project Evaluation Form</h1>
+        
+        <form id="projectForm">
+            <h2>Project Basics</h2>
+            
+            <div class="form-group">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" placeholder="Enter project name">
+            </div>
+            
+            <div class="form-group">
+                <label for="platform">Platform:</label>
+                <select id="platform">
+                    <option value="">Select platform</option>
+                    <option value="shopify">Shopify</option>
+                    <option value="webflow">Webflow</option>
+                    <option value="wordpress">WordPress</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="budget">Budget ($):</label>
+                <input type="number" id="budget" min="0" step="100" placeholder="Enter budget amount">
+            </div>
+            
+            <div class="form-group">
+                <label for="timeline">Project Timeline (weeks):</label>
+                <input type="number" id="timeline" min="1" max="52" placeholder="Enter estimated timeline">
+            </div>
+            
+            <h2>Project Complexity</h2>
+            
+            <div class="form-group">
+                <label for="complexity">How straightforward is the project to build?</label>
+                <input type="range" id="complexity" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Very Simple</span>
+                    <span>Moderate</span>
+                    <span>Very Complex</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="requirementClarity">How clear are the project requirements?</label>
+                <input type="range" id="requirementClarity" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Very Vague</span>
+                    <span>Somewhat Clear</span>
+                    <span>Crystal Clear</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="customFeatures">Number of custom features required:</label>
+                <input type="number" id="customFeatures" min="0" value="0">
+            </div>
+            
+            <h2>Client Assessment</h2>
+            
+            <div class="form-group">
+                <label for="clientAttitude">How would you rate the client's attitude?</label>
+                <input type="range" id="clientAttitude" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Difficult</span>
+                    <span>Neutral</span>
+                    <span>Excellent</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="clientResponsiveness">How responsive is the client?</label>
+                <input type="range" id="clientResponsiveness" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Very Slow</span>
+                    <span>Average</span>
+                    <span>Very Quick</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="decisionMakers">How many decision makers are involved?</label>
+                <input type="number" id="decisionMakers" min="1" value="1">
+            </div>
+            
+            <div class="form-group">
+                <label for="previousExperience">Has the client worked with web designers before?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="experienceYes" name="previousExperience" value="yes">
+                        <label for="experienceYes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="experienceNo" name="previousExperience" value="no">
+                        <label for="experienceNo">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="experienceUnknown" name="previousExperience" value="unknown" checked>
+                        <label for="experienceUnknown">Unknown</label>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Industry & Ethical Considerations</h2>
+            
+            <div class="form-group">
+                <label for="industry">Client's Industry:</label>
+                <input type="text" id="industry" placeholder="e.g., Education, Healthcare, etc.">
+            </div>
+            
+            <div class="form-group">
+                <label for="ethicalConcerns">Are there any ethical concerns with this industry or client?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="ethicalYes" name="ethicalConcerns" value="yes">
+                        <label for="ethicalYes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ethicalNo" name="ethicalConcerns" value="no" checked>
+                        <label for="ethicalNo">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ethicalUnsure" name="ethicalConcerns" value="unsure">
+                        <label for="ethicalUnsure">Unsure</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ethicalDetails">If yes, provide details:</label>
+                <textarea id="ethicalDetails" placeholder="Describe any ethical concerns..."></textarea>
+            </div>
+            
+            <h2>Additional Factors</h2>
+            
+            <div class="form-group">
+                <label for="portfolioValue">How valuable would this project be for your portfolio?</label>
+                <input type="range" id="portfolioValue" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Not Valuable</span>
+                    <span>Somewhat</span>
+                    <span>Very Valuable</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="repeatBusiness">Potential for repeat business or referrals:</label>
+                <input type="range" id="repeatBusiness" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Very Low</span>
+                    <span>Moderate</span>
+                    <span>Very High</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="currentWorkload">Your current workload:</label>
+                <input type="range" id="currentWorkload" min="1" max="10" value="5">
+                <div class="slider-labels">
+                    <span>Very Light</span>
+                    <span>Moderate</span>
+                    <span>Very Heavy</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="skillMatch">How well does this project match your skills?</label>
+                <input type="range" id="skillMatch" min="1" max="10" value="7">
+                <div class="slider-labels">
+                    <span>Poor Match</span>
+                    <span>Decent</span>
+                    <span>Perfect Match</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="scope">Is the project scope well-defined?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="scopeYes" name="scope" value="yes">
+                        <label for="scopeYes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="scopePartially" name="scope" value="partially" checked>
+                        <label for="scopePartially">Partially</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="scopeNo" name="scope" value="no">
+                        <label for="scopeNo">No</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="additionalNotes">Additional Notes:</label>
+                <textarea id="additionalNotes" placeholder="Any other important factors to consider..."></textarea>
+            </div>
+            
+            <button type="button" id="evaluateBtn">Evaluate Project</button>
+        </form>
+        
+        <div id="results">
+            <h2>Project Evaluation Results</h2>
+            
+            <div class="score-chart">
+                <span class="score-label">Project Viability:</span>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="viabilityScore"></div>
+                </div>
+            </div>
+            
+            <div class="score-chart">
+                <span class="score-label">Client Quality:</span>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="clientScore"></div>
+                </div>
+            </div>
+            
+            <div class="score-chart">
+                <span class="score-label">Ethical Alignment:</span>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="ethicalScore"></div>
+                </div>
+            </div>
+            
+            <div class="score-chart">
+                <span class="score-label">Personal Value:</span>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="valueScore"></div>
+                </div>
+            </div>
+            
+            <div class="score-chart">
+                <span class="score-label">Overall Score:</span>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="overallScore"></div>
+                </div>
+            </div>
+            
+            <div class="results-decision" id="decision"></div>
+            
+            <div class="recommendations" id="recommendations"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const evaluateBtn = document.getElementById('evaluateBtn');
+            evaluateBtn.addEventListener('click', evaluateProject);
+            
+            document.getElementById('ethicalConcerns').addEventListener('change', function() {
+                const ethicalDetails = document.getElementById('ethicalDetails');
+                if (document.getElementById('ethicalYes').checked) {
+                    ethicalDetails.required = true;
+                    ethicalDetails.parentElement.style.display = 'block';
+                } else {
+                    ethicalDetails.required = false;
+                    ethicalDetails.parentElement.style.display = 'none';
+                }
+            });
+            
+            // Initially hide ethical details
+            document.getElementById('ethicalDetails').parentElement.style.display = 'none';
+        });
+        
+        function evaluateProject() {
+            // Get form values
+            const platform = document.getElementById('platform').value;
+            const budget = parseFloat(document.getElementById('budget').value) || 0;
+            const timeline = parseInt(document.getElementById('timeline').value) || 0;
+            const complexity = parseInt(document.getElementById('complexity').value);
+            const requirementClarity = parseInt(document.getElementById('requirementClarity').value);
+            const customFeatures = parseInt(document.getElementById('customFeatures').value) || 0;
+            const clientAttitude = parseInt(document.getElementById('clientAttitude').value);
+            const clientResponsiveness = parseInt(document.getElementById('clientResponsiveness').value);
+            const decisionMakers = parseInt(document.getElementById('decisionMakers').value) || 1;
+            const previousExperience = document.querySelector('input[name="previousExperience"]:checked').value;
+            const ethicalConcerns = document.querySelector('input[name="ethicalConcerns"]:checked').value;
+            const portfolioValue = parseInt(document.getElementById('portfolioValue').value);
+            const repeatBusiness = parseInt(document.getElementById('repeatBusiness').value);
+            const currentWorkload = parseInt(document.getElementById('currentWorkload').value);
+            const skillMatch = parseInt(document.getElementById('skillMatch').value);
+            const scope = document.querySelector('input[name="scope"]:checked').value;
+            
+            // Calculate scores (out of 100)
+            
+            // Project viability score
+            let viabilityScore = 0;
+            
+            // Platform match
+            if (platform === 'shopify' || platform === 'webflow' || platform === 'wordpress') {
+                viabilityScore += 20;
+            }
+            
+            // Budget score
+            if (budget >= 1200) {
+                viabilityScore += 20;
+                if (budget >= 2500) {
+                    viabilityScore += 5;
+                }
+            } else {
+                viabilityScore += Math.max(0, (budget / 1200) * 15);
+            }
+            
+            // Complexity and requirements clarity
+            const complexityScore = Math.max(0, (11 - complexity) * 2);
+            viabilityScore += complexityScore;
+            viabilityScore += requirementClarity * 2;
+            
+            // Adjust for custom features (more features = more complexity)
+            if (customFeatures > 5) {
+                viabilityScore -= Math.min(10, (customFeatures - 5) * 2);
+            }
+            
+            // Client quality score
+            let clientScore = 0;
+            
+            // Client attitude and responsiveness
+            clientScore += clientAttitude * 5;
+            clientScore += clientResponsiveness * 5;
+            
+            // Decision makers penalty (more decision makers can complicate the process)
+            if (decisionMakers > 1) {
+                clientScore -= Math.min(20, (decisionMakers - 1) * 5);
+            }
+            
+            // Previous experience bonus
+            if (previousExperience === 'yes') {
+                clientScore += 10;
+            }
+            
+            // Scope definition
+            if (scope === 'yes') {
+                clientScore += 15;
+            } else if (scope === 'partially') {
+                clientScore += 7;
+            }
+            
+            // Normalize client score to 100
+            clientScore = Math.max(0, Math.min(100, clientScore));
+            
+            // Ethical alignment score
+            let ethicalScore = 0;
+            
+            if (ethicalConcerns === 'no') {
+                ethicalScore = 100;
+            } else if (ethicalConcerns === 'unsure') {
+                ethicalScore = 50;
+            } else {
+                ethicalScore = 0;
+            }
+            
+            // Personal value score
+            let valueScore = 0;
+            
+            // Portfolio value
+            valueScore += portfolioValue * 4;
+            
+            // Repeat business potential
+            valueScore += repeatBusiness * 3;
+            
+            // Current workload (inverse - lighter workload is better)
+            valueScore += (11 - currentWorkload) * 3;
+            
+            // Skill match
+            valueScore += skillMatch * 5;
+            
+            // Normalize value score to 100
+            valueScore = Math.max(0, Math.min(100, valueScore));
+            
+            // Calculate overall score (weighted average)
+            const overallScore = (
+                (viabilityScore * 0.35) + 
+                (clientScore * 0.30) + 
+                (ethicalScore * 0.20) + 
+                (valueScore * 0.15)
+            );
+            
+            // Display results
+            displayResults(viabilityScore, clientScore, ethicalScore, valueScore, overallScore);
+        }
+        
+        function displayResults(viabilityScore, clientScore, ethicalScore, valueScore, overallScore) {
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            
+            // Update score bars
+            updateScoreBar('viabilityScore', viabilityScore);
+            updateScoreBar('clientScore', clientScore);
+            updateScoreBar('ethicalScore', ethicalScore);
+            updateScoreBar('valueScore', valueScore);
+            updateScoreBar('overallScore', overallScore);
+            
+            // Set decision message
+            const decision = document.getElementById('decision');
+            let decisionMessage = '';
+            let decisionClass = '';
+            
+            if (overallScore >= 75) {
+                decisionMessage = '✅ TAKE THE PROJECT';
+                decisionClass = 'take-project';
+            } else if (overallScore >= 60) {
+                decisionMessage = '⚠️ CONSIDER WITH CAUTION';
+                decisionClass = 'consider-project';
+            } else {
+                decisionMessage = '❌ DECLINE THE PROJECT';
+                decisionClass = 'decline-project';
+            }
+            
+            decision.textContent = decisionMessage;
+            decision.className = 'results-decision ' + decisionClass;
+            
+            // Generate recommendations
+            const recommendations = document.getElementById('recommendations');
+            let recommendationsHTML = '<h3>Recommendations:</h3><ul>';
+            
+            // Low budget recommendation
+            const budget = parseFloat(document.getElementById('budget').value) || 0;
+            if (budget < 1200) {
+                recommendationsHTML += '<li>The budget is below your minimum threshold of $1,200. Consider negotiating a higher rate.</li>';
+            }
+            
+            // Platform recommendation
+            const platform = document.getElementById('platform').value;
+            if (platform !== 'shopify' && platform !== 'webflow' && platform !== 'wordpress') {
+                recommendationsHTML += '<li>This project uses a platform outside your preferred options. Consider potential learning curves.</li>';
+            }
+            
+            // Client concerns
+            if (clientScore < 60) {
+                recommendationsHTML += '<li>The client evaluation score is concerning. Clear communication and expectations will be crucial.</li>';
+            }
+            
+            // Ethical concerns
+            const ethicalConcerns = document.querySelector('input[name="ethicalConcerns"]:checked').value;
+            if (ethicalConcerns !== 'no') {
+                recommendationsHTML += '<li>Address the ethical concerns before proceeding with this project.</li>';
+            }
+            
+            // Complexity concerns
+            const complexity = parseInt(document.getElementById('complexity').value);
+            const customFeatures = parseInt(document.getElementById('customFeatures').value) || 0;
+            if (complexity > 7 || customFeatures > 5) {
+                recommendationsHTML += '<li>This project has high complexity. Consider a longer timeline or higher budget.</li>';
+            }
+            
+            // Scope definition
+            const scope = document.querySelector('input[name="scope"]:checked').value;
+            if (scope !== 'yes') {
+                recommendationsHTML += '<li>Work on better defining the project scope before committing.</li>';
+            }
+            
+            // Decision makers
+            const decisionMakers = parseInt(document.getElementById('decisionMakers').value) || 1;
+            if (decisionMakers > 2) {
+                recommendationsHTML += '<li>Multiple decision makers may slow down the process. Establish a clear approval workflow.</li>';
+            }
+            
+            // Workload concerns
+            const currentWorkload = parseInt(document.getElementById('currentWorkload').value);
+            if (currentWorkload > 7) {
+                recommendationsHTML += '<li>Your current workload is high. Consider timeline extensions or outsourcing parts of this project.</li>';
+            }
+            
+            recommendationsHTML += '</ul>';
+            recommendations.innerHTML = recommendationsHTML;
+            
+            // Scroll to results
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function updateScoreBar(id, score) {
+            const scoreBar = document.getElementById(id);
+            scoreBar.style.width = score + '%';
+            
+            // Set color based on score
+            if (score >= 75) {
+                scoreBar.style.backgroundColor = '#10b981'; // Green
+            } else if (score >= 60) {
+                scoreBar.style.backgroundColor = '#f59e0b'; // Yellow
+            } else {
+                scoreBar.style.backgroundColor = '#ef4444'; // Red
+            }
+        }
+    </script>
+</body>
+</html>
